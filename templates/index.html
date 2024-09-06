@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Selector</title>
+</head>
+<body>
+    <h1>Prompt Selector</h1>
+    <form method="POST">
+        <label for="prompt_file">Select a prompt:</label>
+        <select name="prompt_file" id="prompt_file">
+            <option value="">Choose a prompt</option>
+            {% for file in prompt_files %}
+            <option value="{{ file }}">{{ file }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Show Prompt">
+    </form>
+
+    {% if selected_prompt %}
+    <h2>Selected Prompt:</h2>
+    <pre>{{ selected_prompt }}</pre>
+    {% endif %}
+</body>
+</html>
