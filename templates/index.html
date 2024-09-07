@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Selector</title>
+    <title>LLM Prompt Processor</title>
+    <style>
+        #output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Prompt Selector</h1>
+    <h1>LLM Prompt Processor</h1>
     <form method="POST">
         <label for="prompt_file">Select a prompt:</label>
         <select name="prompt_file" id="prompt_file">
@@ -15,12 +24,35 @@
             <option value="{{ file }}">{{ file }}</option>
             {% endfor %}
         </select>
-        <input type="submit" value="Show Prompt">
+        <br><br>
+        <label for="user_input">Your input:</label>
+        <textarea name="user_input" id="user_input" rows="30" cols="100"></textarea>
+        <br><br>
+        <input type="submit" value="Process">
     </form>
-
-    {% if selected_prompt %}
+    
+<!--     {% if selected_prompt %}
     <h2>Selected Prompt:</h2>
     <pre>{{ selected_prompt }}</pre>
+    {% endif %} -->
+
+    {% if llm_output %}
+    <h2>LLM Output:</h2>
+    <div id="output">{{ llm_output }}</div>
+    <button onclick="copyOutput()">Copy Output</button>
     {% endif %}
+
+    <script>
+    function copyOutput() {
+        const output = document.getElementById('output');
+        const tempTextArea = document.createElement('textarea');
+        tempTextArea.value = output.textContent;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+        // alert('Output copied to clipboard!');
+    }
+    </script>
 </body>
 </html>
